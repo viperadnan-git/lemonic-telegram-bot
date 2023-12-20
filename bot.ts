@@ -21,7 +21,10 @@ const privateChat = composer.chatType("private");
 const wrapper =
     (handler: (ctx: BotContext) => Promise<void>) =>
     async (ctx: BotContext) => {
-        handler(ctx).catch((err) => console.error(err?.message));
+        handler(ctx).catch((err) => {
+            console.error(`Error in ${handler.name}: ${err}`);
+            ctx.reply("An error has occurred. Please try again later.");
+        });
     };
 
 allChats.command(["start", "help", "settings"], wrapper(start_handler));

@@ -8,8 +8,8 @@
     "scripts": {
         "start": "npx tsx index.ts",
         "build": "npx tsc --outDir build",
-        "start:bun": "bun index.ts",
-        "build:bun": "bun build ./index.ts --outdir ./build --target bun",
+        "bun:start": "bun index.ts",
+        "bun:build": "bun build ./index.ts --outdir ./build --target bun",
         "pretty": "npx prettier --write . --ignore-path .gitignore"
     },
     "dependencies": {
