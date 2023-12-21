@@ -6,7 +6,8 @@
         "typescript": "^5.3.3"
     },
     "scripts": {
-        "start": "npx tsx index.ts",
+        "dev": "npx tsx index.ts",
+        "start": "node build/index.js",
         "build": "npx tsc --outDir build",
         "pretty": "npx prettier --write . --ignore-path .gitignore"
     },

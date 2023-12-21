@@ -73,10 +73,8 @@ const unknownUrlHandler = async (
 ) => {
     let message = others?.message;
     if (!message) message = await ctx.reply(PLEASE_WAIT_TEXT);
-    const data: { [key: string]: string } | undefined = await songlink.find_provider(
-        "spotify",
-        url
-    );
+    const data: { [key: string]: string } | undefined =
+        await songlink.find_provider("spotify", url);
     if (data) {
         const spotify_id = data.id;
 

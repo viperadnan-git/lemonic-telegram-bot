@@ -30,13 +30,13 @@ To start using Lemonic, you need to have Telegram installed on your device. Once
 
 Lemonic is configured using environment variables. The following environment variables are required:
 
-- `SPOTIFY_CLIENT_ID`: The Spotify client ID.
-- `SPOTIFY_CLIENT_SECRET`: The Spotify client secret.
-- `LEMONIC_API`: The Lemonic API url.
-- `BOT_TOKEN`: (Optional) The Telegram bot token. If not provided, only webhooks will be used. You have to set up the webhooks manually.
-- `WEBHOOK_URL`: (Optional) The base url where this service is hosted. If not provided, the bot will use polling instead of webhooks.
-- `PORT`: (Optional) The port to listen on. Defaults to 3000.
-- `HOST`: (Optional) The host to listen on. Defaults to 0.0.0.0.
+-   `SPOTIFY_CLIENT_ID`: The Spotify client ID.
+-   `SPOTIFY_CLIENT_SECRET`: The Spotify client secret.
+-   `LEMONIC_API`: The Lemonic API url.
+-   `BOT_TOKEN`: (Optional) The Telegram bot token. If not provided, only webhooks will be used. You have to set up the webhooks manually.
+-   `WEBHOOK_URL`: (Optional) The base url where this service is hosted. If not provided, the bot will use polling instead of webhooks.
+-   `PORT`: (Optional) The port to listen on. Defaults to 3000.
+-   `HOST`: (Optional) The host to listen on. Defaults to 0.0.0.0.
 
 ## Development
 

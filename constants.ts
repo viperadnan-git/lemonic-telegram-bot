@@ -4,10 +4,8 @@ import { BotContext } from "./modules/types";
 export const bots = new Map<string, Bot<BotContext>>();
 export const WEBHOOK_URL = process.env.WEBHOOK_URL;
 export const BOT_TOKEN = process.env.BOT_TOKEN;
-export const SPOTIFY_CLIENT_ID =
-    process.env.SPOTIFY_CLIENT_ID;
-export const SPOTIFY_CLIENT_SECRET =
-    process.env.SPOTIFY_CLIENT_SECRET;
+export const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+export const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 export const LEMONIC_API = process.env.LEMONIC_API;
 
 export const PLEASE_WAIT_TEXT = "Please wait...";
