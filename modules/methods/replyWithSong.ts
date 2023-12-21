@@ -26,16 +26,16 @@ export default async function replyWithSong(
             error.description ===
             "Bad Request: wrong file identifier/HTTP URL specified"
         ) {
-            if (message && message.text !== PLEASE_WAIT_TEXT) {
+            if (!message) {
+                message = await ctx.reply(PLEASE_WAIT_TEXT, {
+                    disable_notification,
+                });
+            } else if (message && message.text !== PLEASE_WAIT_TEXT) {
                 await ctx.api.editMessageText(
                     message.chat.id,
                     message.message_id,
                     PLEASE_WAIT_TEXT
                 );
-            } else {
-                message = await ctx.reply(PLEASE_WAIT_TEXT, {
-                    disable_notification,
-                });
             }
 
             const file = new InputFile({ url });

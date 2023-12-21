@@ -8,8 +8,6 @@
     "scripts": {
         "start": "npx tsx index.ts",
         "build": "npx tsc --outDir build",
-        "bun:start": "bun index.ts",
-        "bun:build": "bun build ./index.ts --outdir ./build --target bun",
         "pretty": "npx prettier --write . --ignore-path .gitignore"
     },
     "dependencies": {
@@ -18,6 +16,7 @@
         "@grammyjs/runner": "^2.0.3",
         "@spotify/web-api-ts-sdk": "^1.1.2",
         "express": "^4.18.2",
-        "grammy": "^1.19.2"
+        "grammy": "^1.19.2",
+        "node-html-parser": "^6.1.11"
     }
 }

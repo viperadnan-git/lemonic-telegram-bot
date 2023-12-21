@@ -1,86 +1,76 @@
-export default class SongLink {
-    LINK_REGEX: RegExp;
-    providers: {
-        spotify: string[];
-        apple: string[];
-        youtube: string[];
-        youtube_music: string[];
-        soundcloud: string[];
-        deezer: string[];
-        tidal: string[];
-        pandora: string[];
-        amazon: string[];
-        napster: string[];
-        yandex: string[];
-        audiomack: string[];
-        boomplay: string[];
-        anghami: string[];
-    };
+import { parse } from "node-html-parser";
 
-    constructor() {
-        this.LINK_REGEX = new RegExp(
-            /(http|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/gm
+export default class SongLink {
+    baseUrl: string;
+
+    constructor(baseUrl: string = "https://song.link") {
+        this.baseUrl = baseUrl;
+    }
+
+    get_next_data(content: string) {
+        const root = parse(content);
+        const next_data = root.querySelector("script#__NEXT_DATA__");
+        if (!next_data) {
+            throw new Error("No nextjs data found");
+        }
+
+        return JSON.parse(next_data.innerHTML);
+    }
+
+    parse(content: string) {
+        const next_data = this.get_next_data(content);
+        const data = next_data?.props.pageProps?.pageData;
+
+        if (!data) {
+            if (next_data.page == "/not-found") {
+                throw new Error(`No search results found`);
+            }
+            throw new Error(`No page data found in nextjs props`);
+        }
+
+        const sections = data.sections.find(
+            (s: any) => s.sectionId == "section|auto|links|listen"
         );
-        this.providers = {
-            spotify: ["open.spotify.com"],
-            apple: [
-                "music.apple.com",
-                "itunes.apple.com",
-                "geo.music.apple.com",
-                "geo.itunes.apple.com",
-            ],
-            youtube: [
-                "youtube.com",
-                "youtu.be",
-                "www.youtube.com",
-                "www.youtu.be",
-            ],
-            youtube_music: ["music.youtube.com", "www.music.youtube.com"],
-            soundcloud: ["soundcloud.com"],
-            deezer: ["www.deezer.com"],
-            tidal: ["listen.tidal.com"],
-            pandora: ["pandora.com", "www.pandora.com"],
-            amazon: ["music.amazon.com"],
-            napster: ["play.napster.com"],
-            yandex: ["music.yandex.ru"],
-            audiomack: ["audiomack.com"],
-            boomplay: ["www.boomplay.com"],
-            anghami: ["play.anghami.com"],
+        const platforms: { [key: string]: { [key: string]: string } } = {};
+        for (const link of sections.links) {
+            if (link.uniqueId) {
+                const [_, type, id] = link.uniqueId.split("|");
+                platforms[link.platform] = {
+                    url: link.url,
+                    id,
+                    type,
+                };
+            }
+        }
+
+        return {
+            ...data.entityData,
+            platforms,
         };
     }
 
-    extractData(content: string) {
-        const data = content.matchAll(this.LINK_REGEX); // Add 'g' flag to the regex
-        const result: { [key: string]: string } = {}; // Add type annotation to result object
-        if (data) {
-            for (const [provider, domains] of (Object as any).entries(
-                this.providers
-            )) {
-                for (const url of data) {
-                    if (domains.includes(url[2])) {
-                        result[provider] = url[0];
-                        break;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    async searchUrl(url: string) {
-        return await fetch("https://song.link/" + url)
+    async _find(url: string) {
+        return await fetch(url, {
+            headers: {
+                "Accept-Encoding": "gzip",
+            },
+        })
             .then((resp) => resp.text())
             .then((content) => {
-                const data = this.extractData(content);
-                return data;
-            })
-            .catch(() => {
-                return {};
+                return this.parse(content);
             });
     }
 
-    async searchAlternateProvider(provider: string, url: string) {
-        const data: { [key: string]: string } = await this.searchUrl(url);
-        return data[provider] || null;
+    find_url(url: string) {
+        return this._find(`${this.baseUrl}/${url}`);
+    }
+
+    async find_provider(provider: string, url: string) {
+        try {
+            const result = await this.find_url(url);
+            return result.platforms[provider];
+        } catch (err) {
+            return undefined;
+        }
     }
 }

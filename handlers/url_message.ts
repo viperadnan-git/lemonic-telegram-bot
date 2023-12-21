@@ -4,6 +4,7 @@ import {
 } from "../modules/methods/spotifyHandlers";
 
 import { BotContext } from "../modules/types";
+import { Message } from "grammy/types";
 import { PLEASE_WAIT_TEXT } from "../constants";
 import SongLink from "../modules/songlink";
 import lemonic from "../modules/lemonic";
@@ -68,12 +69,16 @@ const spotifyTrackHandler = async (
 const unknownUrlHandler = async (
     ctx: BotContext,
     url: string,
-    others?: { message?: any }
+    others?: { message?: Message }
 ) => {
-    const message = await ctx.reply(PLEASE_WAIT_TEXT);
-    const data = await songlink.searchAlternateProvider("spotify", url ?? "");
+    let message = others?.message;
+    if (!message) message = await ctx.reply(PLEASE_WAIT_TEXT);
+    const data: { [key: string]: string } | undefined = await songlink.find_provider(
+        "spotify",
+        url
+    );
     if (data) {
-        const spotify_id = data.split("/").pop()!;
+        const spotify_id = data.id;
 
         const download_data = await lemonic(spotify_id);
         if (download_data.url) {
