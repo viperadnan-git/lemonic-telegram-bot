@@ -24,7 +24,8 @@ export default async function replyWithSong(
     } catch (error: any) {
         if (
             error.description ===
-            "Bad Request: wrong file identifier/HTTP URL specified"
+                "Bad Request: wrong file identifier/HTTP URL specified" ||
+            error.description === "Bad Request: failed to get HTTP URL content"
         ) {
             if (!message) {
                 message = await ctx.reply(PLEASE_WAIT_TEXT, {

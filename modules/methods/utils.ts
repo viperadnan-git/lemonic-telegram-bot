@@ -36,9 +36,9 @@ export const trackNotAvailableMessage = (track: Track | Episode) => {
 export const albumMessage = (album: Album) => {
     return `<b><a href="${album.external_urls.spotify}">${
         album.name
-    }</a></b>\n<i>${album.artists.map((artist) => artist.name).join(", ")}</i>\n\n${
-        album.label
-    }`;
+    }</a></b>\n<i>${album.artists
+        .map((artist) => artist.name)
+        .join(", ")}</i>\n\n${album.label}`;
 };
 
 export const playlistMessage = (playlist: Playlist) => {
