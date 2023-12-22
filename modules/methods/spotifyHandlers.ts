@@ -1,4 +1,4 @@
-import { albumMessage, playlistMessage } from "./utils";
+import { albumMessage, create3x4Image, playlistMessage } from "./utils";
 
 import { BotContext } from "../types";
 import { InputMediaBuilder } from "grammy";
@@ -44,9 +44,10 @@ export async function spotifyAlbumHandler(
                 ],
             ],
         };
+        const image = create3x4Image(album.images[0].url);
 
         if (others?.message && others.message.media_group_id) {
-            const photo = InputMediaBuilder.photo(album.images[0].url);
+            const photo = InputMediaBuilder.photo(image);
             await ctx.api.editMessageMedia(
                 others.message.chat.id,
                 others.message.message_id,
@@ -54,7 +55,7 @@ export async function spotifyAlbumHandler(
                 { reply_markup }
             );
         } else {
-            await ctx.replyWithPhoto(album.images[0].url, {
+            await ctx.replyWithPhoto(image, {
                 caption: albumMessage(album),
                 reply_markup,
             });
@@ -116,9 +117,10 @@ export async function spotifyPlaylistHandler(
                 ],
             ],
         };
+        const image = create3x4Image(playlist.images[0].url);
 
         if (others?.message && others.message.media_group_id) {
-            const photo = InputMediaBuilder.photo(playlist.images[0].url);
+            const photo = InputMediaBuilder.photo(image);
             await ctx.api.editMessageMedia(
                 others.message.chat.id,
                 others.message.message_id,
@@ -126,7 +128,7 @@ export async function spotifyPlaylistHandler(
                 { reply_markup }
             );
         } else {
-            await ctx.replyWithPhoto(playlist.images[0].url, {
+            await ctx.replyWithPhoto(image, {
                 caption: playlistMessage(playlist),
                 reply_markup,
             });

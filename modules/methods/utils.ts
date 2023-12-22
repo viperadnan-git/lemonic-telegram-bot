@@ -36,13 +36,13 @@ export const trackNotAvailableMessage = (track: Track | Episode) => {
 export const albumMessage = (album: Album) => {
     return `<b><a href="${album.external_urls.spotify}">${
         album.name
-    }</a></b> by ${album.artists.map((artist) => artist.name).join(", ")}\n${
+    }</a></b>\n<i>${album.artists.map((artist) => artist.name).join(", ")}</i>\n\n${
         album.label
-    }\n<b>Tracks:</b> ${album.tracks.total}`;
+    }`;
 };
 
 export const playlistMessage = (playlist: Playlist) => {
-    return `<b><a href="${playlist.external_urls.spotify}">${playlist.name}</a></b> by <b>${playlist.owner.display_name}</b>\n${playlist.description}\n<b>Tracks:</b> ${playlist.tracks.total}`;
+    return `<b><a href="${playlist.external_urls.spotify}">${playlist.name}</a></b>\n<i>${playlist.owner.display_name}</i>\n\n${playlist.description}`;
 };
 
 interface SearchResult {
@@ -60,3 +60,8 @@ export const searchResultMessage = (
         .map((item) => `${item.index}. ${item.name}`)
         .join("\n")}`;
 };
+
+export const create3x4Image = (url: string) =>
+    `https://wsrv.nl/?url=${encodeURIComponent(
+        url
+    )}&w=1137&h=640&q=100&fit=contain&l=0&cbg=121212`;
