@@ -52,6 +52,8 @@ const botCreator = (token: string) => {
     bot.api.config.use(parseMode("HTML"));
     bot.api.config.use(autoRetry());
     bot.use(composer);
+
+    // this will not be caught when using webhooks
     bot.catch((err) => console.error(err));
     return bot;
 };

@@ -28,7 +28,13 @@ app.post(`${BOT_TOKEN_PATH}/:token`, async (req: Request, res: Response) => {
         bot = botCreator(bot_token);
         bots.set(bot_token, bot);
     }
-    await webhookCallback(bot, "express", "throw", 15_000)(req, res);
+
+    try {
+        await webhookCallback(bot, "express")(req, res);
+    } catch (error: any) {
+        console.error(error?.description ?? error?.message ?? error);
+        res.status(200).end();
+    }
 });
 
 app.get("/ping", (req: Request, res: Response) => {
