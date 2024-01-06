@@ -91,27 +91,29 @@ export async function spotifyPlaylistHandler(
             );
         }
 
-        do {
+        let offset = playlist.tracks.offset;
+        while (offset < playlist.tracks.total) {
             await replyWithMutlipleSongs(ctx, playlist.tracks, {
                 disable_notification: true,
             });
+            offset += playlist.tracks.limit;
             if (playlist.tracks.next) {
                 playlist.tracks = await spotify.playlists.getPlaylistItems(
                     playlist.id,
                     undefined,
                     undefined,
                     playlist.tracks.limit as 50 | undefined,
-                    playlist.tracks.offset + playlist.tracks.limit
+                    offset
                 );
             }
-        } while (playlist.tracks.next);
+        }
         await ctx.reply(`🎵 ${playlist.name} playlist downloaded`);
     } else {
         const reply_markup = {
             inline_keyboard: [
                 [
                     {
-                        text: `Download ${playlist.tracks.items.length} songs`,
+                        text: `Download ${playlist.tracks.total} songs`,
                         callback_data: `spotify----${playlist.id}----playlist-dl`,
                     },
                 ],
