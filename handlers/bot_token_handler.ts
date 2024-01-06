@@ -1,4 +1,4 @@
-import { BOT_TOKEN_PATH, WEBHOOK_URL, bots } from "../constants";
+import { WEBHOOK_URL, bots } from "../constants";
 
 import { BotContext } from "../modules/types";
 import { MessageEntity } from "grammy/types";
@@ -32,14 +32,17 @@ export default async function bot_token_handler(ctx: BotContext) {
             bot = botCreator(bot_token);
             try {
                 await bot.api.setWebhook(
-                    (WEBHOOK_URL + BOT_TOKEN_PATH + "/" + bot_token) as string,
+                    (WEBHOOK_URL + "/bot" + bot_token) as string,
                     {
                         drop_pending_updates: true,
                     }
                 );
                 await ctx.reply("Bot cloned successfully");
             } catch (error: any) {
-                await ctx.reply(error.message);
+                console.error(`Error in while setting webhook: ${error}`);
+                await ctx.reply(
+                    `An error has occurred when setting webhook: <code>${error.message}</code>\n\nPlease contact the bot developer or set the webhook manually to ${WEBHOOK_URL}/bot${bot_token}`
+                );
             }
         } else {
             await ctx.reply("Bot is already cloned");

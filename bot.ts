@@ -35,9 +35,12 @@ privateChat.hears(
     wrapper(search_command_handler)
 );
 privateChat.on("message::url", wrapper(url_handler));
-privateChat
-    .on("message:text")
-    .filter((ctx) => ctx.msg.forward_date === undefined, wrapper(text_handler));
+privateChat.on("msg:text").filter(
+    // @ts-ignore
+    (ctx) => ctx.msg.forward_from?.username?.toLowerCase() === "botfather",
+    wrapper(bot_token_handler)
+);
+privateChat.on("message:text", wrapper(text_handler));
 
 composer.on("inline_query", wrapper(inline_query_handler));
 composer.on("callback_query:data", wrapper(callback_query_handler));
@@ -57,12 +60,5 @@ const botCreator = (token: string) => {
     bot.catch((err) => console.error(err));
     return bot;
 };
-
-privateChat
-    .on("msg:text")
-    .filter(
-        (ctx) => ctx.msg.forward_from?.username?.toLowerCase() === "botfather",
-        wrapper(bot_token_handler)
-    );
 
 export default botCreator;

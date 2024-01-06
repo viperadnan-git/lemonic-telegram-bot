@@ -2,7 +2,10 @@ import { Bot } from "grammy";
 import { BotContext } from "./modules/types";
 
 export const bots = new Map<string, Bot<BotContext>>();
-export const WEBHOOK_URL = process.env.WEBHOOK_URL;
+export const WEBHOOK_URL =
+    process.env.WEBHOOK_URL && process.env.WEBHOOK_URL.endsWith("/")
+        ? process.env.WEBHOOK_URL.slice(0, -1)
+        : process.env.WEBHOOK_URL;
 export const BOT_TOKEN = process.env.BOT_TOKEN;
 export const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 export const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -23,6 +26,5 @@ export const CLONE_BOT_BUTTON = {
     url: "https://telegra.ph/Create-Your-Own-Lemonic-Bot-A-Step-by-Step-Guide-12-16",
 };
 
-export const BOT_TOKEN_PATH = "/bot";
 export const HOST = process.env.HOST || "0.0.0.0";
 export const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;

@@ -1,11 +1,4 @@
-import {
-    BOT_TOKEN,
-    BOT_TOKEN_PATH,
-    HOST,
-    PORT,
-    WEBHOOK_URL,
-    bots,
-} from "./constants";
+import { BOT_TOKEN, HOST, PORT, WEBHOOK_URL, bots } from "./constants";
 import { NextFunction, Request, Response } from "express";
 
 import botCreator from "./bot";
@@ -21,7 +14,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-app.post(`${BOT_TOKEN_PATH}/:token`, async (req: Request, res: Response) => {
+app.post("/bot:token", async (req: Request, res: Response) => {
     const bot_token = req.params.token;
     let bot = bots.get(bot_token);
     if (!bot) {
@@ -61,9 +54,7 @@ app.listen(PORT, HOST, () => {
     } else if (WEBHOOK_URL && BOT_TOKEN) {
         console.info("Starting bot using webhook");
         const bot = botCreator(BOT_TOKEN);
-        bot.api.setWebhook(
-            (WEBHOOK_URL + BOT_TOKEN_PATH + "/" + BOT_TOKEN) as string
-        );
+        bot.api.setWebhook((WEBHOOK_URL + "/bot" + BOT_TOKEN) as string);
         bots.set(BOT_TOKEN, bot);
     }
 
