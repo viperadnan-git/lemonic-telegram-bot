@@ -17,7 +17,7 @@ export const INVALID_PROVIDER_TEXT = "Invalid provider: ";
 export const TRACK_NOT_AVAILABLE_TEXT =
     "Track is still being processed. Please try again later.";
 export const TRACK_NOT_AVAILABLE_MESSAGE =
-    "This track will be added within 15 minutes.";
+    "This track will be added within 5 minutes.";
 export const SEARCH_HELP_TEXT =
     "You can search for tracks, albums and playlists.\n\nTrack search example:\n<pre>search (track name)</pre><pre>search track (track name)</pre>\nAlbum search example:\n<pre>search album (album name)</pre>\nPlaylist search example:\n<pre>search playlist (playlist name)</pre>\n\nThe search query is case-insensitive so you don't have to worry about captial and small letters. You can also search for tracks in inline mode.";
 export const CHECK_AGAIN_TEXT = "Check Again";

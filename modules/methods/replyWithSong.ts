@@ -56,7 +56,7 @@ export default async function replyWithSong(
                 disable_notification,
             });
         } else {
-            console.error(error);
+            throw error;
         }
     } finally {
         if (message) {

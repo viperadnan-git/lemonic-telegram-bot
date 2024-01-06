@@ -21,11 +21,11 @@ const privateChat = composer.chatType("private");
 const wrapper =
     (handler: (ctx: BotContext) => Promise<void>) =>
     async (ctx: BotContext) => {
-        handler(ctx).catch((err) => {
+        handler(ctx).catch(async (err: any) => {
             console.error(`Error in ${handler.name}: ${err}`);
             if (!ctx.chosenInlineResult) {
                 try {
-                    ctx.reply("An error has occurred. Please try again later. If this issue persists, please contact the bot developer.");
+                    await ctx.reply("An error has occurred. Please try again later. If this issue persists, please contact the bot developer.");
                 } catch (error: any) {
                     console.error(
                         `Error in ${handler.name}: Cannot send error feedback to user (${error.message}) `

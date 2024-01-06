@@ -35,11 +35,11 @@ export default async function callback_query_handler(ctx: BotContext) {
         } else if (suffix === "album") {
             await spotifyAlbumHandler(ctx, id, { message: ctx.msg });
         } else if (suffix === "album-dl") {
-            spotifyAlbumHandler(ctx, id, { message: ctx.msg, upload: true });
+            await spotifyAlbumHandler(ctx, id, { message: ctx.msg, upload: true });
         } else if (suffix === "playlist") {
             await spotifyPlaylistHandler(ctx, id, { message: ctx.msg });
         } else if (suffix === "playlist-dl") {
-            spotifyPlaylistHandler(ctx, id, { message: ctx.msg, upload: true });
+            await spotifyPlaylistHandler(ctx, id, { message: ctx.msg, upload: true });
         } else {
             await ctx.answerCallbackQuery({
                 text: INVALID_PROVIDER_TEXT + suffix,

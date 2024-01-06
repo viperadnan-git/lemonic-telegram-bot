@@ -29,7 +29,5 @@ export default async function replyWithMutlipleSongs(
                 disable_notification: others?.disable_notification ?? true,
             });
         }
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 }
