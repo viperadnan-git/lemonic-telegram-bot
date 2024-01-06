@@ -13,7 +13,8 @@ export default async function chosen_inline_result_handler(ctx: BotContext) {
                     audio
                 );
             } catch (error: any) {
-                if (error.description !== "Bad Request: MEDIA_EMPTY") {
+                if (error.description !== "Bad Request: MEDIA_EMPTY" &&
+                    error.description !== "Bad Request: failed to get HTTP URL content") {
                     throw error;
                 }
             }

@@ -23,7 +23,15 @@ const wrapper =
     async (ctx: BotContext) => {
         handler(ctx).catch((err) => {
             console.error(`Error in ${handler.name}: ${err}`);
-            ctx.reply("An error has occurred. Please try again later.");
+            if (!ctx.chosenInlineResult) {
+                try {
+                    ctx.reply("An error has occurred. Please try again later. If this issue persists, please contact the bot developer.");
+                } catch (error: any) {
+                    console.error(
+                        `Error in ${handler.name}: Cannot send error feedback to user (${error.message}) `
+                    );
+                }
+            }
         });
     };
 

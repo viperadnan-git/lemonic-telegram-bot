@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { BOT_TOKEN, HOST, PORT, WEBHOOK_URL, bots } from "./constants";
 import { NextFunction, Request, Response } from "express";
 

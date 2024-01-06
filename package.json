@@ -7,6 +7,7 @@
     },
     "scripts": {
         "dev": "npx ts-node index.ts",
+        "test": "npx nodemon index.ts",
         "start": "node build/index.js",
         "build": "npx tsc --outDir build",
         "pretty": "npx prettier --write . --ignore-path .gitignore"
@@ -16,6 +17,7 @@
         "@grammyjs/parse-mode": "^1.9.0",
         "@grammyjs/runner": "^2.0.3",
         "@spotify/web-api-ts-sdk": "^1.1.2",
+        "dotenv": "^16.3.1",
         "express": "^4.18.2",
         "grammy": "^1.20.2",
         "node-html-parser": "^6.1.12"
