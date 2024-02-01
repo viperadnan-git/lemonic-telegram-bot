@@ -66,7 +66,7 @@ Contributions are welcome! If you have any suggestions, bug reports, or feature 
 
 ## License
 
-Lemonic is licensed under the [MIT License](./LICENSE).
+Lemonic is licensed under the [GPL-3.0-or-later](./LICENSE).
 
 ## Disclaimer
 
