@@ -42,13 +42,14 @@ app.all("*", async (req: Request, res: Response) => {
 });
 
 app.listen(PORT, HOST, () => {
+    console.log(`Server listening on http://${HOST}:${PORT}`);
+
     if (!WEBHOOK_URL && !BOT_TOKEN) {
-        console.error("WEBHOOK_URL or BOT_TOKEN not set");
-        process.exit(1);
+        console.warn("WEBHOOK_URL or BOT_TOKEN not set in .env file, new bot cannot be created");
     }
 
     if (!WEBHOOK_URL && BOT_TOKEN) {
-        console.info("Webhook URL not set, starting bot only using polling");
+        console.info("Webhook URL not set, starting bot using polling");
         const bot = botCreator(BOT_TOKEN);
         run(bot);
     } else if (WEBHOOK_URL && !BOT_TOKEN) {

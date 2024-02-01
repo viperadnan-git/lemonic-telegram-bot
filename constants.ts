@@ -26,5 +26,5 @@ export const CLONE_BOT_BUTTON = {
     url: "https://telegra.ph/Create-Your-Own-Lemonic-Bot-A-Step-by-Step-Guide-12-16",
 };
 
-export const HOST = process.env.HOST || "0.0.0.0";
+export const HOST = process.env.HOST ? process.env.HOST : process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
 export const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
